@@ -35,7 +35,7 @@ do
 	(echo $j ReachabilityDeadlock ; echo "FORMULA ReachabilityDeadlock ? TECHNIQUES NONE") > $j-RD.out
 	(echo $j OneSafe ; echo "FORMULA OneSafe ? TECHNIQUES NONE") > $j-OS.out
 	mv *.out $root/CAV14/oracle/
-	tar cvf $j.tgz $j/
+	tar czf $j.tgz $j/
 	mv $j.tgz $root/CAV14/
 	rm -rf $j/	
 done; 
