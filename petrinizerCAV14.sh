@@ -40,3 +40,9 @@ do
 	rm -rf $j/	
 done; 
 
+cd CAV14
+
+tree -H "." > index.html
+
+cd ..
+
