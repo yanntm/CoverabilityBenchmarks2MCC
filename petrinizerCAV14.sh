@@ -57,7 +57,7 @@ for i in */ ; do cd $i ; sed -i 's#<name.*#<name>CAV14_petrinizer</name>#g' mode
 # rebuild a set of tgz
 rm *.tgz
 
-for i in */ ; do tar czf $i.tgz $i/ ; rm -r $i/ ; done ;
+for i in * ; do tar czf $i.tgz $i/ ; rm -r $i/ ; done ;
 
 
 tree -H "." > index.html
