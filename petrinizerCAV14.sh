@@ -40,7 +40,7 @@ do
 	rm -rf $j/	
 done;
 
-cd CAV14
+cd $root/CAV14
 
 # merging similar models detected using fdupes to detect them
 for i in *.tgz ; 
@@ -49,7 +49,7 @@ do
 done	
 	
 # hack names out of the picture
-for i in */ ; do cd $i ; sed -i 's/<name.*/<name>CAV14_petrinizer</name>/g' model.pnml ; cd ..; done ;
+for i in */ ; do cd $i ; sed -i 's#<name.*#<name>CAV14_petrinizer</name>#g' model.pnml ; cd ..; done ;
 
 # nasty one liner to get rid of duplicates
 (fdupes -1 */ | grep -v xml | grep -v spec) | while read -r line ; do cpt=0 ; for i in $line ; do folder=$(echo $i | sed 's#/model.pnml##g') ; if [ $cpt -eq 0 ] ; then main=$folder ; fi ; cp $folder/ReachabilityCardinality.xml $main/ReachabilityCardinality.$cpt.xml ; if [ $cpt -ne 0 ] ; then rm -rf $folder ; fi ;  cpt=$((cpt+1)) ; done ; done ;
