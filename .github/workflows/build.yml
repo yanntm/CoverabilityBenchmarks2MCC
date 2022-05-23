@@ -12,6 +12,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Install packages
+      run: sudo apt-get clean ; sudo apt-get update ; sudo apt-get install fdupes
     - name: Checkout code
       uses: actions/checkout@v2
     - name: Build everything
