@@ -38,9 +38,27 @@ do
 	tar czf $j.tgz $j/
 	mv $j.tgz $root/CAV14/
 	rm -rf $j/	
-done; 
+done;
 
 cd CAV14
+
+# merging similar models detected using fdupes to detect them
+for i in *.tgz ; 
+do
+	tar xzf $i
+done	
+	
+# hack names out of the picture
+for i in */ ; do cd $i ; sed -i 's/<name.*/<name>CAV14_petrinizer</name>/g' model.pnml ; cd ..; done ;
+
+# nasty one liner to get rid of duplicates
+(fdupes -1 */ | grep -v xml | grep -v spec) | while read -r line ; do cpt=0 ; for i in $line ; do folder=$(echo $i | sed 's#/model.pnml##g') ; if [ $cpt -eq 0 ] ; then main=$folder ; fi ; cp $folder/ReachabilityCardinality.xml $main/ReachabilityCardinality.$cpt.xml ; if [ $cpt -ne 0 ] ; then rm -rf $folder ; fi ;  cpt=$((cpt+1)) ; done ; done ;
+	
+# rebuild a set of tgz
+rm *.tgz
+
+for i in */ ; do tar czf $i.tgz $i/ ; rm -r $i/ ; done ;
+
 
 tree -H "." > index.html
 
