@@ -57,7 +57,23 @@ done
 	
 
 # nasty one liner to get rid of duplicates
-(fdupes -1 */ | grep -v xml | grep -v spec) | while read -r line ; do cpt=0 ; for i in $line ; do folder=$(echo $i | sed 's#/model.pnml##g') ; if [ $cpt -eq 0 ] ; then main=$folder ; fi ; cp $folder/ReachabilityCardinality.xml $main/ReachabilityCardinality.$cpt.xml ; if [ $cpt -ne 0 ] ; then rm -rf $folder ; else rm $folder/ReachabilityCardinality.xml fi ;  cpt=$((cpt+1)) ; done ; done ;
+(fdupes -1 */ | grep -v xml | grep -v spec) | while read -r line ; do 
+	cpt=0 ; 
+	for i in $line ; 
+	do 
+		folder=$(echo $i | sed 's#/model.pnml##g') ; 
+		if [ $cpt -eq 0 ] ; then 
+			main=$folder ; 
+		fi ; 
+		cp $folder/ReachabilityCardinality.xml $main/ReachabilityCardinality.$cpt.xml ; 
+		if [ $cpt -ne 0 ] ; then 
+			rm -rf $folder ; 
+		else 
+			rm $folder/ReachabilityCardinality.xml 
+		fi 
+		cpt=$((cpt+1)) ; 
+	done ; 
+done ;
 
 # we can now fuse the properties back into one file
 for folder in */ ;
