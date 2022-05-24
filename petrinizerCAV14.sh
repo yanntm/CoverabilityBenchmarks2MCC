@@ -12,13 +12,20 @@ if [ ! -f petrinizer-master.tar.gz ] ;
 	# this is as far as we know the latest repo used by Petrinizer author Meyer
 	wget https://gitlab.lrz.de/i7/petrinizer/-/archive/master/petrinizer-master.tar.gz
 	tar xzf petrinizer-master.tar.gz
-	fi
+fi
 
 # sequence for CAV'14
 mkdir -p $root/CAV14
 mkdir -p $root/CAV14/oracle
 
 cd petrinizer-master/benchmarks/cav-benchmarks
+
+# there are duplicate spec in this benchmark i.e. model+formula pair
+# fdupes 
+# -1 on one line
+# -q quiet
+# -f skip first
+fdupes -q -1 -f  * | grep -P '.spec( |$)' | xargs rm -f
 
 # each model is presented as a spec file with a reachability goal	
 for i in $(find -name *.spec -print) ; 
@@ -48,11 +55,9 @@ do
 	tar xzf $i
 done	
 	
-# hack names out of the picture
-for i in */ ; do cd $i ; sed -i 's#<name.*#<name>CAV14_petrinizer</name>#g' model.pnml ; cd ..; done ;
 
 # nasty one liner to get rid of duplicates
-(fdupes -1 */ | grep -v xml | grep -v spec) | while read -r line ; do cpt=0 ; for i in $line ; do folder=$(echo $i | sed 's#/model.pnml##g') ; if [ $cpt -eq 0 ] ; then main=$folder ; fi ; cp $folder/ReachabilityCardinality.xml $main/ReachabilityCardinality.$cpt.xml ; if [ $cpt -ne 0 ] ; then rm -rf $folder ; fi ;  cpt=$((cpt+1)) ; done ; done ;
+(fdupes -1 */ | grep -v xml | grep -v spec) | while read -r line ; do cpt=0 ; for i in $line ; do folder=$(echo $i | sed 's#/model.pnml##g') ; if [ $cpt -eq 0 ] ; then main=$folder ; fi ; cp $folder/ReachabilityCardinality.xml $main/ReachabilityCardinality.$cpt.xml ; if [ $cpt -ne 0 ] ; then rm -rf $folder ; else rm $folder/ReachabilityCardinality.xml fi ;  cpt=$((cpt+1)) ; done ; done ;
 	
 # rebuild a set of tgz
 rm *.tgz
