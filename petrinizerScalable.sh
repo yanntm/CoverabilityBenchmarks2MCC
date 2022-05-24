@@ -20,7 +20,8 @@ for i in */ ; do
 	cd $i ; 
 	j=$(echo $i | sed s#/##g) ; 
 	if [ -f make_nets.sh ] ; then 
-		./make_nets.sh 7 ; 
+		./make_nets.sh 7 ;
+		rm n1.pnet 
 	else 
 		python make_net.py > $j.pnet ; 
 	fi ; 
