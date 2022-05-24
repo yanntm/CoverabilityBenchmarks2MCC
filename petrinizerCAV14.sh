@@ -93,9 +93,9 @@ do
 		head -2 ReachabilityCardinality.0.xml > $target
 		for i in ReachabilityCardinality.*.xml ;
 		do 
-			(tail -n +3 $i | head -n -1) >> $target						
+			(tail -n +3 $i | head -n -2) >> $target						
 		done
-		tail -1 ReachabilityCardinality.0.xml >> target
+		tail -2 ReachabilityCardinality.0.xml >> $target
 		rm ReachabilityCardinality.*.xml
 	fi	
 	cd ..	
