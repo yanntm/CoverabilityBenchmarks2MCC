@@ -18,10 +18,17 @@ jobs:
       uses: actions/checkout@v2
     - name: Build everything
       run: ./install_itstools.sh ; ./petrinizerCAV14.sh ; ./petrinizerScalable.sh
-    - name: Deploy to GitHub Pages
+    - name: Deploy CAV14
       uses: JamesIves/github-pages-deploy-action@4.1.5
       with:
-          branch: gh-pages # The branch the action should deploy to.
+          branch: cav14 # The branch the action should deploy to.
           folder: CAV14 # The folder the action should deploy.
+          clean: true # Automatically remove deleted files from the deploy branch
+          single-commit: true 
+    - name: Deploy Scalable
+      uses: JamesIves/github-pages-deploy-action@4.1.5
+      with:
+          branch: scalable # The branch the action should deploy to.
+          folder: Scalable # The folder the action should deploy.
           clean: true # Automatically remove deleted files from the deploy branch
           single-commit: true 
