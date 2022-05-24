@@ -58,6 +58,33 @@ done
 
 # nasty one liner to get rid of duplicates
 (fdupes -1 */ | grep -v xml | grep -v spec) | while read -r line ; do cpt=0 ; for i in $line ; do folder=$(echo $i | sed 's#/model.pnml##g') ; if [ $cpt -eq 0 ] ; then main=$folder ; fi ; cp $folder/ReachabilityCardinality.xml $main/ReachabilityCardinality.$cpt.xml ; if [ $cpt -ne 0 ] ; then rm -rf $folder ; else rm $folder/ReachabilityCardinality.xml fi ;  cpt=$((cpt+1)) ; done ; done ;
+
+# we can now fuse the properties back into one file
+for folder in */ ;
+do
+	cd $folder
+	
+	if [ -f ReachabilityCardinality.0.xml ] ;
+	then
+		# rename id of properties to different values
+		for i in ReachabilityCardinality.*.xml ;
+		do 
+			j=$(echo $i | sed 's/.xml//g')
+			sed -i "s/target/$j/g" $i
+		done
+		# now merge into result
+		target=ReachabilityCardinality.xml
+		head -2 ReachabilityCardinality.0.xml > $target
+		for i in ReachabilityCardinality.*.xml ;
+		do 
+			(tail -n +3 $i | head -n -1) >> $target						
+		done
+		tail -1 ReachabilityCardinality.0.xml >> target
+		rm ReachabilityCardinality.*.xml
+	fi	
+	cd ..	
+done
+
 	
 # rebuild a set of tgz
 rm *.tgz
