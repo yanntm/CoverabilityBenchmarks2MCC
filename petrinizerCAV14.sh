@@ -97,13 +97,13 @@ for i in * ; do tar czf $i.tgz $i/ ; rm -r $i/ ; done ;
 
 for i in *.tgz ; do 
 	j=$(echo $i | sed 's/.tgz//g') ; 
-	(echo "$j StateSpace" ; echo "FORMULA STATESPACE ?") > $j-SS.out ; 
-	(echo "$j ReachabilityCardinality" ; echo "FORMULA Reachable ?") > $j-RC.out ; 
-	(echo "$j ReachabilityDeadlock" ; echo "FORMULA Reachability ?") > $j-RD.out ; 
-	(echo "$j OneSafe" ; echo "FORMULA OneSafe ?") > $j-OS.out ; 
-	(echo "$j QuasiLiveness" ; echo "FORMULA QuasiLiveness ?") > $j-QL.out ; 
-	(echo "$j Liveness" ; echo "FORMULA Liveness ?") > $j-QL.out ; 
-	(echo "$j StableMarking" ; echo "FORMULA StableMarking ?") > $j-QL.out ; 
+	(echo "$j StateSpace" ; echo "STATE_SPACE STATES ? TECHNIQUES NONE") > $j-SS.out ; 
+	(echo "$j ReachabilityCardinality" ; echo "FORMULA Reachable ? TECHNIQUES NONE") > $j-RC.out ; 
+	(echo "$j ReachabilityDeadlock" ; echo "FORMULA Reachability ? TECHNIQUES NONE") > $j-RD.out ; 
+	(echo "$j OneSafe" ; echo "FORMULA OneSafe ? TECHNIQUES NONE") > $j-OS.out ; 
+	(echo "$j QuasiLiveness" ; echo "FORMULA QuasiLiveness ? TECHNIQUES NONE") > $j-QL.out ; 
+	(echo "$j Liveness" ; echo "FORMULA Liveness ? TECHNIQUES NONE") > $j-L.out ; 
+	(echo "$j StableMarking" ; echo "FORMULA StableMarking ? TECHNIQUES NONE") > $j-SM.out ; 
 done ;
 
 mkdir -p $root/CAV14/oracle
